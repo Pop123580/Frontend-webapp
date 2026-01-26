@@ -72,4 +72,27 @@
     "tw-animate-css": "1.3.3",
     "typescript": "^5"
   }
+{
+  "name": "your-project-name",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    ...your existing dependencies...
+  },
+  "devDependencies": {
+    ...your existing devDependencies...
+  },
+  "overrides": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
 }
+
+
+}
+
+
