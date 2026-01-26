@@ -1,6 +1,3 @@
-/**
- * Calculate days remaining until deadline
- */
 export function daysUntilDeadline(deadline: string): number {
   const deadlineDate = new Date(deadline)
   const today = new Date()

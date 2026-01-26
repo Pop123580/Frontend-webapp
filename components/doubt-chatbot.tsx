@@ -1,31 +1,88 @@
-'use client'
+"use client"
 
-import React from "react"
-
-import { useState } from 'react'
-import { useChat } from '@ai-sdk/react'
-import { DefaultChatTransport } from 'ai'
+import React, { useState, useRef, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { MessageCircle, Send, Copy, Loader2, Globe } from 'lucide-react'
 
+interface Message {
+  id: string
+  role: 'user' | 'assistant'
+  content: string
+}
+
+const API_URL = "http://localhost:5000/api"
+
 export default function DoubtChatbot() {
   const [input, setInput] = useState('')
   const [selectedLanguage, setSelectedLanguage] = useState('english')
   const [copiedId, setCopiedId] = useState<string | null>(null)
+  const [messages, setMessages] = useState<Message[]>([])
+  const [status, setStatus] = useState<'ready' | 'streaming'>('ready')
+  const [sessionId] = useState(() => Date.now().toString())
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const { messages, sendMessage, status, setMessages } = useChat({
-    transport: new DefaultChatTransport({ api: '/api/chat' }),
-  })
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!input.trim() || status !== 'ready') return
 
-    const messageWithLanguage = `${input}\n\n(Please respond in ${selectedLanguage})`
-    sendMessage({ text: messageWithLanguage })
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: 'user',
+      content: input
+    }
+
+    setMessages(prev => [...prev, userMessage])
+    const currentInput = input
     setInput('')
+    setStatus('streaming')
+
+    try {
+      const response = await fetch(`${API_URL}/chat/ask`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: currentInput,
+          language: selectedLanguage,
+          sessionId: sessionId,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to get response')
+      }
+
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: data.data.message
+      }
+
+      setMessages(prev => [...prev, assistantMessage])
+    } catch (error: any) {
+      console.error('Chat error:', error)
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: `Error: ${error.message || 'Failed to get response. Make sure the backend server is running.'}`
+      }
+      setMessages(prev => [...prev, errorMessage])
+    } finally {
+      setStatus('ready')
+    }
   }
 
   const copyMessage = (text: string, id: string) => {
@@ -120,16 +177,10 @@ export default function DoubtChatbot() {
               </div>
             </div>
           ) : (
-            messages.map((message, idx) => {
-              const messageContent =
-                message.parts?.[0]?.type === 'text'
-                  ? message.parts[0].text
-                  : message.content ||
-                    (typeof message === 'string' ? message : JSON.stringify(message))
-
-              return (
+            <>
+              {messages.map((message) => (
                 <div
-                  key={message.id || idx}
+                  key={message.id}
                   className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   {message.role === 'assistant' && (
@@ -144,16 +195,16 @@ export default function DoubtChatbot() {
                         : 'bg-muted text-foreground'
                     }`}
                   >
-                    <p className="text-sm leading-relaxed">{messageContent}</p>
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
                     {message.role === 'assistant' && (
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => copyMessage(messageContent, message.id || idx)}
+                        onClick={() => copyMessage(message.content, message.id)}
                         className="mt-2 h-6 px-2 text-xs"
                       >
                         <Copy className="w-3 h-3 mr-1" />
-                        {copiedId === (message.id || idx) ? 'Copied!' : 'Copy'}
+                        {copiedId === message.id ? 'Copied!' : 'Copy'}
                       </Button>
                     )}
                   </div>
@@ -163,8 +214,9 @@ export default function DoubtChatbot() {
                     </div>
                   )}
                 </div>
-              )
-            })
+              ))}
+              <div ref={messagesEndRef} />
+            </>
           )}
 
           {status === 'streaming' && (
@@ -225,13 +277,7 @@ export default function DoubtChatbot() {
               <Button
                 key={idx}
                 variant="outline"
-                onClick={() => {
-                  setInput(question)
-                  setTimeout(() => {
-                    const form = document.querySelector('form') as HTMLFormElement
-                    if (form) form.dispatchEvent(new Event('submit', { bubbles: true }))
-                  }, 100)
-                }}
+                onClick={() => setInput(question)}
                 className="justify-start text-left h-auto py-2"
               >
                 <MessageCircle className="w-4 h-4 mr-2 flex-shrink-0" />

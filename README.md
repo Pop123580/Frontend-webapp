@@ -2,7 +2,7 @@
 
 LearnAI is a sophisticated educational technology platform designed specifically for students and learners. It combines four powerful AI-driven tools to enhance the learning experience: Study Planner, Notes Summarizer, Exam Preparation Assistant, and Multi-Language Doubt Solver Chatbot.
 
-## 🌟 Features
+##  Features
 
 ### 1. **Study Planner & Timetable Generator**
 - Intelligently schedule study sessions based on your deadlines and available time
@@ -55,7 +55,7 @@ LearnAI is a sophisticated educational technology platform designed specifically
 - Learn in your preferred language
 - Get instant academic support anytime
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Node.js 18+ and npm
@@ -89,7 +89,7 @@ LearnAI is a sophisticated educational technology platform designed specifically
 5. **Open your browser**
    Navigate to `http://localhost:3000` to access LearnAI
 
-## 📱 User Interface
+##  User Interface
 
 ### Dashboard Overview
 The main dashboard provides quick access to all features with:
@@ -105,7 +105,7 @@ The main dashboard provides quick access to all features with:
 - **Exam Prep**: Manage your exam preparation plans
 - **Ask AI**: Chat with the Doubt Solving Chatbot
 
-## 🔧 Technology Stack
+##  Technology Stack
 
 ### Frontend
 - **Next.js 16**: React framework with App Router
@@ -129,7 +129,7 @@ The application uses Supabase PostgreSQL with the following tables:
 - `chat_messages`: Chatbot conversation history
 - `user_preferences`: User settings and preferences
 
-## 🎨 Design System
+##  Design System
 
 ### Color Palette
 - **Primary**: Blue-ish (Educational, trustworthy)
@@ -146,7 +146,7 @@ The application uses Supabase PostgreSQL with the following tables:
 - Mobile-first design approach
 - Optimized for: Mobile (320px), Tablet (768px), Desktop (1024px+)
 
-## 💾 Data Persistence
+##  Data Persistence
 
 All user data is stored securely in Supabase:
 - Study sessions and schedules
@@ -157,7 +157,7 @@ All user data is stored securely in Supabase:
 
 Row Level Security (RLS) ensures data privacy with user-based access control.
 
-## 🤖 AI Features
+##  AI Features
 
 ### Study Plan Generation
 - Analyzes deadline and topic complexity
@@ -183,7 +183,7 @@ Row Level Security (RLS) ensures data privacy with user-based access control.
 - Resource recommendations
 - Personalized study tips
 
-## 📊 Key Metrics & Tracking
+##  Key Metrics & Tracking
 
 - **Study Sessions**: Monitor scheduled and completed sessions
 - **Notes Summarized**: Track documents processed
@@ -191,7 +191,7 @@ Row Level Security (RLS) ensures data privacy with user-based access control.
 - **Doubts Solved**: Record questions answered
 - **Overall Progress**: Visual representation of learning journey
 
-## 🔒 Security & Privacy
+##  Security & Privacy
 
 - Secure user authentication via Supabase Auth
 - Row-Level Security (RLS) for data protection
@@ -199,7 +199,7 @@ Row Level Security (RLS) ensures data privacy with user-based access control.
 - No data sharing with third parties
 - GDPR compliant data handling
 
-## 📚 API Endpoints
+##  API Endpoints
 
 ### Chat
 - **POST** `/api/chat` - Send messages to the AI assistant
@@ -210,14 +210,14 @@ Row Level Security (RLS) ensures data privacy with user-based access control.
 ### Summarization
 - **POST** `/api/summarize` - Summarize text content
 
-## 🌐 Browser Support
+##  Browser Support
 
 - Chrome/Chromium (Latest 2 versions)
 - Firefox (Latest 2 versions)
 - Safari (Latest 2 versions)
 - Edge (Latest 2 versions)
 
-## 📝 Usage Examples
+##  Usage Examples
 
 ### Creating a Study Session
 1. Navigate to "Study Plan" tab
@@ -247,7 +247,7 @@ Row Level Security (RLS) ensures data privacy with user-based access control.
 4. Review the AI's explanation
 5. Ask follow-up questions as needed
 
-## 🚀 Deployment
+##  Deployment
 
 ### Deploy to Vercel
 1. Push your code to GitHub
@@ -260,7 +260,7 @@ npm run build
 npm run start
 ```
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Chat not responding?
 - Check API keys in environment variables
@@ -277,7 +277,7 @@ npm run start
 - Update browser to latest version
 - Check available disk space
 
-## 📞 Support
+##  Support
 
 For issues or feature requests:
 1. Check the documentation
@@ -285,11 +285,11 @@ For issues or feature requests:
 3. Create a new issue with detailed information
 4. Contact support team
 
-## 📄 License
+##  License
 
 This project is licensed under the MIT License - see LICENSE file for details.
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - Vercel AI SDK for AI integration
 - shadcn/ui for UI components
@@ -297,7 +297,7 @@ This project is licensed under the MIT License - see LICENSE file for details.
 - Supabase for backend services
 - OpenAI for language models
 
-## 🔄 Future Enhancements
+##  Future Enhancements
 
 - Voice-based Q&A interaction
 - Real-time collaboration features
@@ -309,4 +309,4 @@ This project is licensed under the MIT License - see LICENSE file for details.
 
 ---
 
-**LearnAI**: Empowering students through intelligent, AI-driven learning tools. Happy studying! 📚✨
+**LearnAI**: Empowering students through intelligent, AI-driven learning tools. Happy studying! 

@@ -21,6 +21,7 @@ import {
   FileText,
   Lightbulb,
 } from 'lucide-react'
+import AITimetableGenerator from '@/components/ai-timetable-generator'
 
 interface ExamPrep {
   id: string
@@ -270,6 +271,12 @@ export default function ExamPrepAssistant() {
                   </div>
                 </CardHeader>
               </Card>
+
+              {/* AI Timetable Generator for this exam */}
+              <AITimetableGenerator
+                subjects={[selectedExam.subject]}
+                examDate={selectedExam.examDate}
+              />
 
               <Tabs defaultValue="topics" className="w-full">
                 <TabsList className="grid w-full grid-cols-3">

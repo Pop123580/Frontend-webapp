@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Calendar, Plus, Trash2, CheckCircle2 } from 'lucide-react'
+import AITimetableGenerator from '@/components/ai-timetable-generator'
 
 interface StudySession {
   id: string
@@ -66,6 +67,11 @@ export default function StudyPlanner() {
     }
   }
 
+  const uniqueSubjects = Array.from(new Set(sessions.map(s => s.subject)))
+  const nextDeadline = sessions.length > 0
+    ? new Date(Math.min(...sessions.map(s => new Date(s.deadline).getTime()))).toISOString().split('T')[0]
+    : ''
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -81,6 +87,14 @@ export default function StudyPlanner() {
           Add Session
         </Button>
       </div>
+
+      {/* AI Timetable Generator */}
+      {sessions.length > 0 && nextDeadline && (
+        <AITimetableGenerator
+          subjects={uniqueSubjects}
+          examDate={nextDeadline}
+        />
+      )}
 
       {showForm && (
         <Card className="border border-border/50 bg-card">

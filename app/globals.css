@@ -47,43 +47,45 @@
 }
 
 .dark {
-  /* Dark paper aesthetic - warm dark browns */
-  --background: oklch(0.18 0.04 70);
-  --foreground: oklch(0.92 0.01 70);
-  --card: oklch(0.22 0.05 70);
-  --card-foreground: oklch(0.92 0.01 70);
-  --popover: oklch(0.22 0.05 70);
-  --popover-foreground: oklch(0.92 0.01 70);
-  /* Warmer primary for dark mode */
-  --primary: oklch(0.65 0.14 70);
-  --primary-foreground: oklch(0.18 0.04 70);
-  /* Lighter sage for dark */
-  --secondary: oklch(0.55 0.08 155);
-  --secondary-foreground: oklch(0.92 0.01 70);
-  --muted: oklch(0.32 0.05 70);
-  --muted-foreground: oklch(0.72 0.01 70);
-  /* Lighter warm accent for dark */
-  --accent: oklch(0.75 0.1 80);
-  --accent-foreground: oklch(0.18 0.04 70);
-  --destructive: oklch(0.6 0.15 25);
-  --destructive-foreground: oklch(0.92 0.01 70);
-  --border: oklch(0.28 0.04 70);
-  --input: oklch(0.25 0.04 70);
-  --ring: oklch(0.65 0.14 70);
-  /* Earthy chart colors for dark */
-  --chart-1: oklch(0.65 0.14 70);
-  --chart-2: oklch(0.55 0.08 155);
-  --chart-3: oklch(0.65 0.1 45);
-  --chart-4: oklch(0.65 0.09 200);
-  --chart-5: oklch(0.6 0.11 35);
-  --sidebar: oklch(0.2 0.04 70);
-  --sidebar-foreground: oklch(0.92 0.01 70);
-  --sidebar-primary: oklch(0.65 0.14 70);
-  --sidebar-primary-foreground: oklch(0.92 0.01 70);
-  --sidebar-accent: oklch(0.32 0.05 70);
-  --sidebar-accent-foreground: oklch(0.92 0.01 70);
-  --sidebar-border: oklch(0.28 0.04 70);
-  --sidebar-ring: oklch(0.65 0.14 70);
+  /* Dark paper aesthetic - warm dark browns with eye comfort optimization */
+  /* Reduced contrast between background and text to reduce eye strain */
+  --background: oklch(0.16 0.03 70);
+  --foreground: oklch(0.88 0.008 70);
+  --card: oklch(0.2 0.04 70);
+  --card-foreground: oklch(0.88 0.008 70);
+  --popover: oklch(0.2 0.04 70);
+  --popover-foreground: oklch(0.88 0.008 70);
+  /* Warmer, softer primary for dark mode with reduced saturation */
+  --primary: oklch(0.6 0.12 70);
+  --primary-foreground: oklch(0.16 0.03 70);
+  /* Lighter sage for dark - softer hue */
+  --secondary: oklch(0.52 0.07 155);
+  --secondary-foreground: oklch(0.88 0.008 70);
+  /* Muted tones for text that won't strain eyes */
+  --muted: oklch(0.3 0.04 70);
+  --muted-foreground: oklch(0.68 0.008 70);
+  /* Lighter warm accent for dark - reduced saturation */
+  --accent: oklch(0.7 0.08 80);
+  --accent-foreground: oklch(0.16 0.03 70);
+  --destructive: oklch(0.55 0.14 25);
+  --destructive-foreground: oklch(0.88 0.008 70);
+  --border: oklch(0.26 0.03 70);
+  --input: oklch(0.23 0.03 70);
+  --ring: oklch(0.6 0.12 70);
+  /* Earthy chart colors for dark - reduced saturation */
+  --chart-1: oklch(0.6 0.12 70);
+  --chart-2: oklch(0.52 0.07 155);
+  --chart-3: oklch(0.6 0.09 45);
+  --chart-4: oklch(0.6 0.08 200);
+  --chart-5: oklch(0.55 0.1 35);
+  --sidebar: oklch(0.18 0.03 70);
+  --sidebar-foreground: oklch(0.88 0.008 70);
+  --sidebar-primary: oklch(0.6 0.12 70);
+  --sidebar-primary-foreground: oklch(0.88 0.008 70);
+  --sidebar-accent: oklch(0.3 0.04 70);
+  --sidebar-accent-foreground: oklch(0.88 0.008 70);
+  --sidebar-border: oklch(0.26 0.03 70);
+  --sidebar-ring: oklch(0.6 0.12 70);
 }
 
 @theme inline {
@@ -131,6 +133,14 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    /* Smooth color scheme transition */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
   body {
     @apply bg-background text-foreground;
     background-image: 
@@ -142,6 +152,7 @@
         rgba(0, 0, 0, 0.02) 4px
       );
     font-feature-settings: "liga" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
   /* Paper-like card styling */
@@ -193,5 +204,50 @@
   /* Decorative line elements */
   .divider-line {
     @apply h-0.5 bg-gradient-to-r from-primary/40 to-transparent;
+  }
+
+  /* Eye comfort features for dark mode */
+  .dark {
+    /* Soften shadows in dark mode for less contrast */
+    [class*="card"] {
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    [class*="card"]:hover {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    /* Reduce blue light and use warmer colors */
+    body {
+      color-scheme: dark;
+    }
+
+    /* Reduce brightness of white text */
+    input::placeholder,
+    textarea::placeholder {
+      opacity: 0.6;
+    }
+  }
+
+  /* Accessibility: reduce motion for sensitive users */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Focus indicators for keyboard navigation */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
   }
 }

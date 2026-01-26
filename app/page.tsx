@@ -11,9 +11,17 @@ import ExamPrepAssistant from '@/components/exam-prep-assistant'
 import DoubtChatbot from '@/components/doubt-chatbot'
 import UserPreferences from '@/components/user-preferences'
 import QuickTips from '@/components/quick-tips'
+import ThemeToggle from '@/components/theme-toggle'
+import { useAudio } from '@/hooks/use-audio'
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview')
+  const { play: playPageTurn } = useAudio('/sounds/paper-turn.wav')
+
+  const handleTabChange = (value: string) => {
+    playPageTurn()
+    setActiveTab(value)
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -33,6 +41,7 @@ export default function Dashboard() {
             <div className="flex items-center gap-3">
               <p className="text-sm text-muted-foreground hidden sm:block italic">Elevate Your Learning</p>
               <div className="flex items-center gap-1">
+                <ThemeToggle />
                 <UserPreferences />
                 <Button variant="ghost" size="icon" title="Sign Out" className="h-9 w-9">
                   <LogOut className="w-4 h-4" />
@@ -45,7 +54,7 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
           <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 mb-8">
             <TabsTrigger value="overview" className="flex items-center gap-2">
               <Lightbulb className="w-4 h-4" />

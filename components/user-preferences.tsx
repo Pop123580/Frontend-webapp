@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Settings, Moon, Sun, Clock, User } from 'lucide-react'
+import { useTheme } from '@/hooks/use-theme'
 
 interface UserPreferences {
   theme: 'light' | 'dark' | 'auto'
@@ -15,8 +16,9 @@ interface UserPreferences {
 
 export default function UserPreferences() {
   const [isOpen, setIsOpen] = useState(false)
+  const { theme, setTheme } = useTheme()
   const [preferences, setPreferences] = useState<UserPreferences>({
-    theme: 'auto',
+    theme: theme as 'light' | 'dark' | 'auto',
     defaultSessionDuration: 60,
     studyReminders: true,
     defaultLanguage: 'english',
@@ -26,13 +28,22 @@ export default function UserPreferences() {
   useEffect(() => {
     const saved = localStorage.getItem('learnai-preferences')
     if (saved) {
-      setPreferences(JSON.parse(saved))
+      const parsed = JSON.parse(saved)
+      setPreferences(parsed)
     }
   }, [])
 
   const savePreferences = () => {
     localStorage.setItem('learnai-preferences', JSON.stringify(preferences))
+    // Apply theme immediately
+    setTheme(preferences.theme)
     setIsOpen(false)
+  }
+
+  const handleThemeChange = (newTheme: 'light' | 'dark' | 'auto') => {
+    setPreferences({ ...preferences, theme: newTheme })
+    // Apply theme immediately
+    setTheme(newTheme)
   }
 
   if (!isOpen) {
@@ -65,18 +76,18 @@ export default function UserPreferences() {
           <div>
             <label className="text-sm font-medium text-foreground block mb-3">Theme</label>
             <div className="flex gap-2">
-              {(['light', 'dark', 'auto'] as const).map(theme => (
+              {(['light', 'dark', 'auto'] as const).map(t => (
                 <Button
-                  key={theme}
-                  variant={preferences.theme === theme ? 'default' : 'outline'}
+                  key={t}
+                  variant={preferences.theme === t ? 'default' : 'outline'}
                   size="sm"
-                  onClick={() => setPreferences({ ...preferences, theme })}
+                  onClick={() => handleThemeChange(t)}
                   className="flex-1 gap-1"
                 >
-                  {theme === 'light' && <Sun className="w-4 h-4" />}
-                  {theme === 'dark' && <Moon className="w-4 h-4" />}
-                  {theme === 'auto' && <span>Auto</span>}
-                  <span className="capitalize hidden sm:inline">{theme}</span>
+                  {t === 'light' && <Sun className="w-4 h-4" />}
+                  {t === 'dark' && <Moon className="w-4 h-4" />}
+                  {t === 'auto' && <span>Auto</span>}
+                  <span className="capitalize hidden sm:inline">{t}</span>
                 </Button>
               ))}
             </div>
