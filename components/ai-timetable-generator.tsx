@@ -23,7 +23,7 @@ interface AITimetableProps {
   onGenerationComplete?: (timetable: TimetableEntry[]) => void
 }
 
-const API_URL = "http://localhost:5000/api"
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"
 
 export default function AITimetableGenerator({ subjects, examDate, onGenerationComplete }: AITimetableProps) {
   const [isGenerating, setIsGenerating] = useState(false)
