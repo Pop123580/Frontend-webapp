@@ -19,7 +19,7 @@ const languages = [
   { code: "ja", name: "Japanese", flag: "🇯🇵" },
 ];
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://learnai-backend-1.onrender.com/api";
 
 export default function AskAIPage() {
   const [messages, setMessages] = useState<Message[]>([]);
