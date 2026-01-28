@@ -8,8 +8,22 @@ interface Message {
     role: 'user' | 'assistant';
     content: string;
 }
-
-const languages = ['English', 'Hindi', 'Spanish', 'French', 'German', 'Mandarin', 'Japanese'];
+const languages = [
+  { code: "en", name: "English", flag: "🇮🇳" },
+  { code: "hi", name: "Hindi", flag: "🇮🇳" },
+  { code: "bn", name: "Bengali", flag: "🇮🇳" },
+  { code: "te", name: "Telugu", flag: "🇮🇳" },
+  { code: "mr", name: "Marathi", flag: "🇮🇳" },
+  { code: "ta", name: "Tamil", flag: "🇮🇳" },
+  { code: "gu", name: "Gujarati", flag: "🇮🇳" },
+  { code: "kn", name: "Kannada", flag: "🇮🇳" },
+  { code: "ml", name: "Malayalam", flag: "🇮🇳" },
+  { code: "or", name: "Odia", flag: "🇮🇳" },
+  { code: "pa", name: "Punjabi", flag: "🇮🇳" },
+  { code: "as", name: "Assamese", flag: "🇮🇳" },
+  { code: "ur", name: "Urdu", flag: "🇮🇳" },
+  { code: "sa", name: "Sanskrit", flag: "🇮🇳" },
+];
 
 export default function AskAI() {
     const [messages, setMessages] = useState<Message[]>([]);

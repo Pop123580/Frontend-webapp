@@ -97,16 +97,22 @@ export default function DoubtChatbot() {
     }
   }
 
-  const languages = [
-    { code: 'english', name: 'English' },
-    { code: 'spanish', name: 'Spanish' },
-    { code: 'french', name: 'French' },
-    { code: 'german', name: 'German' },
-    { code: 'hindi', name: 'Hindi' },
-    { code: 'mandarin', name: 'Mandarin' },
-    { code: 'japanese', name: 'Japanese' },
-  ]
-
+ const languages = [
+  { code: "en", name: "English", flag: "🇮🇳" },
+  { code: "hi", name: "Hindi", flag: "🇮🇳" },
+  { code: "bn", name: "Bengali", flag: "🇮🇳" },
+  { code: "te", name: "Telugu", flag: "🇮🇳" },
+  { code: "mr", name: "Marathi", flag: "🇮🇳" },
+  { code: "ta", name: "Tamil", flag: "🇮🇳" },
+  { code: "gu", name: "Gujarati", flag: "🇮🇳" },
+  { code: "kn", name: "Kannada", flag: "🇮🇳" },
+  { code: "ml", name: "Malayalam", flag: "🇮🇳" },
+  { code: "or", name: "Odia", flag: "🇮🇳" },
+  { code: "pa", name: "Punjabi", flag: "🇮🇳" },
+  { code: "as", name: "Assamese", flag: "🇮🇳" },
+  { code: "ur", name: "Urdu", flag: "🇮🇳" },
+  { code: "sa", name: "Sanskrit", flag: "🇮🇳" },
+];
   return (
     <div className="space-y-6">
       <div>
