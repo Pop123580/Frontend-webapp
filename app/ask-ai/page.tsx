@@ -351,5 +351,5 @@ export default function AskAIPage() {
     </div>
   );
 }
-
+// v2 - Indian languages update
 
