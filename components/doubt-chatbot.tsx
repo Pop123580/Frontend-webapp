@@ -16,7 +16,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"
 
 export default function DoubtChatbot() {
   const [input, setInput] = useState('')
-  const [selectedLanguage, setSelectedLanguage] = useState('english')
+  const [selectedLanguage, setSelectedLanguage] = useState('en')
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [status, setStatus] = useState<'ready' | 'streaming'>('ready')
