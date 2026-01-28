@@ -10,13 +10,27 @@ interface Message {
 }
 
 const languages = [
-  { code: "en", name: "English", flag: "🇬🇧" },
-  { code: "es", name: "Spanish", flag: "🇪🇸" },
-  { code: "fr", name: "French", flag: "🇫🇷" },
-  { code: "de", name: "German", flag: "🇩🇪" },
+  { code: "en", name: "English", flag: "🇮🇳" },
   { code: "hi", name: "Hindi", flag: "🇮🇳" },
-  { code: "zh", name: "Mandarin", flag: "🇨🇳" },
-  { code: "ja", name: "Japanese", flag: "🇯🇵" },
+  { code: "bn", name: "Bengali", flag: "🇮🇳" },
+  { code: "te", name: "Telugu", flag: "🇮🇳" },
+  { code: "mr", name: "Marathi", flag: "🇮🇳" },
+  { code: "ta", name: "Tamil", flag: "🇮🇳" },
+  { code: "gu", name: "Gujarati", flag: "🇮🇳" },
+  { code: "kn", name: "Kannada", flag: "🇮🇳" },
+  { code: "ml", name: "Malayalam", flag: "🇮🇳" },
+  { code: "or", name: "Odia", flag: "🇮🇳" },
+  { code: "pa", name: "Punjabi", flag: "🇮🇳" },
+  { code: "as", name: "Assamese", flag: "🇮🇳" },
+  { code: "mai", name: "Maithili", flag: "🇮🇳" },
+  { code: "ks", name: "Kashmiri", flag: "🇮🇳" },
+  { code: "ne", name: "Nepali", flag: "🇮🇳" },
+  { code: "kok", name: "Konkani", flag: "🇮🇳" },
+  { code: "sd", name: "Sindhi", flag: "🇮🇳" },
+  { code: "doi", name: "Dogri", flag: "🇮🇳" },
+  { code: "mni", name: "Manipuri", flag: "🇮🇳" },
+  { code: "ur", name: "Urdu", flag: "🇮🇳" },
+  { code: "sa", name: "Sanskrit", flag: "🇮🇳" },
 ];
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://learnai-backend-1.onrender.com/api";
@@ -26,10 +40,14 @@ export default function AskAIPage() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedLang, setSelectedLang] = useState("English");
+  const [showAllLanguages, setShowAllLanguages] = useState(false);
   const [sessionId] = useState(() => Date.now().toString());
   const [error, setError] = useState("");
   const [backendStatus, setBackendStatus] = useState<"checking" | "online" | "offline">("checking");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Popular languages to show by default (first 7)
+  const popularLanguages = languages.slice(0, 7);
 
   useEffect(() => {
     checkBackendStatus();
@@ -127,20 +145,20 @@ export default function AskAIPage() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">💬 Ask AI</h1>
           <p className="text-gray-500 mt-1">
-            Get instant answers to your academic questions
+            Get instant answers in your preferred Indian language
           </p>
         </div>
         <div className="flex items-center gap-3">
           <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm ${
-            backendStatus === "online" 
-              ? "bg-green-100 text-green-700" 
+            backendStatus === "online"
+              ? "bg-green-100 text-green-700"
               : backendStatus === "offline"
               ? "bg-red-100 text-red-700"
               : "bg-yellow-100 text-yellow-700"
           }`}>
             <div className={`w-2 h-2 rounded-full ${
-              backendStatus === "online" 
-                ? "bg-green-500" 
+              backendStatus === "online"
+                ? "bg-green-500"
                 : backendStatus === "offline"
                 ? "bg-red-500"
                 : "bg-yellow-500 animate-pulse"
@@ -165,7 +183,7 @@ export default function AskAIPage() {
           <code className="block bg-red-100 rounded-lg p-3 text-sm text-red-800">
             cd learnai-backend && node server.js
           </code>
-          <button 
+          <button
             onClick={checkBackendStatus}
             className="mt-3 px-4 py-2 bg-red-600 text-white rounded-lg text-sm hover:bg-red-700"
           >
@@ -181,11 +199,18 @@ export default function AskAIPage() {
         </div>
       )}
 
-      {/* Language Selection */}
+      {/* Language Selection - Indian Languages */}
       <div className="bg-white rounded-xl border border-gray-200 p-4">
-        <p className="text-sm text-gray-600 mb-3">Select Language:</p>
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-sm text-gray-600">🇮🇳 Select Indian Language:</p>
+          <span className="text-sm text-amber-600 font-medium">
+            Selected: {selectedLang}
+          </span>
+        </div>
+        
+        {/* Popular Languages */}
         <div className="flex flex-wrap gap-2">
-          {languages.map((lang) => (
+          {popularLanguages.map((lang) => (
             <button
               key={lang.code}
               onClick={() => setSelectedLang(lang.name)}
@@ -195,10 +220,38 @@ export default function AskAIPage() {
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
-              {lang.flag} {lang.name}
+              {lang.name}
             </button>
           ))}
+          <button
+            onClick={() => setShowAllLanguages(!showAllLanguages)}
+            className="px-4 py-2 rounded-full text-sm font-medium bg-orange-100 text-orange-700 hover:bg-orange-200 transition-all"
+          >
+            {showAllLanguages ? "Show Less ▲" : `+${languages.length - 7} More Languages ▼`}
+          </button>
         </div>
+
+        {/* All Languages */}
+        {showAllLanguages && (
+          <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-gray-200">
+            {languages.slice(7).map((lang) => (
+              <button
+                key={lang.code}
+                onClick={() => {
+                  setSelectedLang(lang.name);
+                  setShowAllLanguages(false);
+                }}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  selectedLang === lang.name
+                    ? "bg-amber-600 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                {lang.name}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Chat Container */}
@@ -207,14 +260,14 @@ export default function AskAIPage() {
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-8">
-              <div className="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mb-4">
-                <span className="text-4xl">💬</span>
+              <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mb-4">
+                <span className="text-4xl">🇮🇳</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Ask your first question
+                Ask in {selectedLang}
               </h3>
               <p className="text-gray-500 max-w-sm mb-6">
-                Type any academic question and get instant AI-powered answers
+                Type any question and get AI-powered answers in your language
               </p>
               <div className="flex flex-wrap justify-center gap-2">
                 {[
@@ -280,7 +333,7 @@ export default function AskAIPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={backendStatus === "offline" ? "Start backend server first..." : "Type your question here..."}
+              placeholder={backendStatus === "offline" ? "Start backend server first..." : `Ask in ${selectedLang}...`}
               className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               disabled={loading || backendStatus === "offline"}
             />
