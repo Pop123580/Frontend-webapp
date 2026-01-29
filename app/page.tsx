@@ -209,7 +209,7 @@ export default function Dashboard() {
           <div className="flex flex-col items-center justify-center space-y-4">
             <div className="h-0.5 w-12 bg-primary/20"></div>
             <p className="text-center text-sm text-muted-foreground">
-              © 2024 LearnAI. Your AI-powered learning platform.
+              © 2026 LearnAI. Your AI-powered learning platform.
             </p>
             <p className="text-xs text-muted-foreground/70">
               Designed for scholarly excellence and crafted with care.
